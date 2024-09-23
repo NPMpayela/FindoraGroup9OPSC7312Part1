@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/design_default_color_background"
+    android:backgroundTint="#EDF2F4"
+    android:foregroundTint="#1E1C1C"
+    tools:context=".MainActivity2"
+    tools:ignore="ExtraText">
+
+
+    <!-- Upload Image Text -->
+
+    <!-- Image Placeholder -->
+
+    <!-- Event Type Label -->
+
+    <!-- Checkboxes for Event Types -->
+
+    <!-- Share to Label -->
+
+    <!-- ImageButton for Sharing -->
+
+    <!-- Upload Event Button -->
+
+    <!-- Back Button -->
+
+    <TextView
+        android:id="@+id/headerTextView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+
+        android:layout_marginBottom="10dp"
+        android:background="#D5C2C8"
+        android:backgroundTint="#CFBCB9"
+        android:gravity="center"
+        android:padding="16dp"
+        android:textColor="#E8E3E3"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/textView8"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="158dp"
+        android:layout_height="25dp"
+        android:layout_marginTop="61dp"
+        android:fontFamily="@font/amiko"
+        android:paddingStart="2sp"
+        android:text="Event image:"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="11dp"
+        android:layout_marginTop="46dp"
+        android:layout_marginEnd="11dp"
+        android:layout_marginBottom="45dp"
+        android:background="#ECE8E8"
+        app:layout_constraintBottom_toBottomOf="@+id/button"
+        app:layout_constraintEnd_toEndOf="@+id/etendtime"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toBottomOf="@+id/headerTextView"
+        app:srcCompat="@drawable/baseline_add_photo_alternate_24" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:text="Event Type:"
+        android:textColor="#3E3A3A"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        app:layout_constraintBaseline_toBaselineOf="@+id/eventType"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="66dp"
+        android:text="Share to:"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/etstarttime" />
+
+    <ImageButton
+        android:id="@+id/imageButton"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="39dp"
+        app:layout_constraintEnd_toEndOf="@+id/textView9"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/textView10"
+        app:layout_constraintTop_toTopOf="@+id/textView10"
+        app:srcCompat="@drawable/common_google_signin_btn_icon_dark"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/btnUploadevent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="27dp"
+        android:layout_marginEnd="27dp"
+        android:layout_marginBottom="116dp"
+        android:backgroundTint="#308FDC"
+        android:text="Upload Event"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="17dp"
+        android:layout_marginTop="12dp"
+        android:backgroundTint="#9A9191"
+        android:text="Back"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/btnUploadevent"
+        app:layout_constraintTop_toBottomOf="@+id/btnUploadevent" />
+
+    <!--    <ImageButton-->
+    <!--        android:id="@+id/imgbrowsebtn"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="0dp"-->
+    <!--        android:layout_marginEnd="52dp"-->
+    <!--        android:contentDescription="@string/app_name"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@+id/imgbtn2"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintStart_toEndOf="@+id/imgbtn2"-->
+    <!--        app:layout_constraintTop_toTopOf="@+id/imgbtn2"-->
+    <!--        app:srcCompat="@drawable/baseline_collections_24"-->
+    <!--        app:tint="#AF8181" />-->
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:foregroundTint="#222020"
+        android:text="start time :"
+        android:textColor="#131111"
+        app:layout_constraintBottom_toBottomOf="@+id/textView12"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+    <TextView
+        android:id="@+id/textView12"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="244dp"
+        android:layout_marginBottom="243dp"
+        android:backgroundTint="#AAA3A3"
+        android:text="End time :"
+        android:textColor="#131212"
+        app:layout_constraintBottom_toTopOf="@+id/btnUploadevent"
+        app:layout_constraintStart_toStartOf="@+id/etendtime"
+        app:layout_constraintTop_toTopOf="@+id/textView8" />
+
+    <EditText
+        android:id="@+id/etstarttime"
+        android:layout_width="0dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="242dp"
+        android:layout_marginBottom="243dp"
+        android:ems="10"
+        android:inputType="time"
+        android:textColor="#0C0B0B"
+        app:layout_constraintBottom_toBottomOf="@+id/btnUploadevent"
+        app:layout_constraintEnd_toStartOf="@+id/button"
+        app:layout_constraintStart_toStartOf="@+id/textView11"
+        app:layout_constraintTop_toTopOf="@+id/imageView"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <EditText
+        android:id="@+id/etendtime"
+        android:layout_width="120dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="19dp"
+        android:layout_marginEnd="59dp"
+        android:layout_marginBottom="29dp"
+        android:ems="10"
+        android:inputType="time"
+        android:textColor="#191717"
+        app:layout_constraintBottom_toTopOf="@+id/eventType"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/textView12"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <ImageButton
+        android:id="@+id/imgbtn2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="13dp"
+        android:backgroundTint="#605B5B"
+        android:foregroundTint="#887474"
+        app:layout_constraintBottom_toBottomOf="@+id/textView11"
+        app:layout_constraintStart_toEndOf="@+id/textView11"
+        app:srcCompat="@android:drawable/ic_menu_camera"
+        app:tint="#BAB1B0"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+    <Button
+        android:id="@+id/button"
+        android:layout_width="103dp"
+        android:layout_height="0dp"
+        android:backgroundTint="#B3ABA9"
+        android:text="Browse"
+        app:layout_constraintBottom_toTopOf="@+id/textView12"
+        app:layout_constraintEnd_toEndOf="@+id/imageView"
+        app:layout_constraintStart_toStartOf="@+id/imageView"
+        app:layout_constraintTop_toTopOf="@+id/imgbtn2" />
+
+    <Spinner
+        android:id="@+id/eventType"
+        android:layout_width="133dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginBottom="58dp"
+        android:entries="@array/eventType"
+        android:spinnerMode="dialog"
+        app:layout_constraintBottom_toTopOf="@+id/imageButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.184"
+        app:layout_constraintStart_toEndOf="@+id/textView9"
+        app:layout_constraintTop_toTopOf="@+id/etstarttime"
+        app:layout_constraintVertical_bias="0.0" />
+
+    ImageButton
+    android:id="@+id/imageButton3"
+    android:layout_width="11dp"
+    android:layout_height="90dp"
+    app:srcCompat="@drawable/fileicon"
+    tools:layout_editor_absoluteX="288dp"
+    tools:layout_editor_absoluteY="121dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

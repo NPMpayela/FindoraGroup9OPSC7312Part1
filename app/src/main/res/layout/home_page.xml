@@ -1,0 +1,126 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#D5D2D2"
+    android:padding="16dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#D5D2D2"
+        android:paddingBottom="16dp">
+
+        <!-- Profile Image and Notifications -->
+        <ImageView
+            android:id="@+id/profileImageView"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:layout_alignParentStart="true"
+            android:layout_marginTop="6dp"
+            android:layout_marginEnd="12dp"
+            android:layout_marginBottom="6dp"
+            android:background="@drawable/circle_border" />
+
+        <ImageView
+            android:id="@+id/notificationButton"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:src="@drawable/circle_border" />
+
+        <TextView
+            android:id="@+id/welcomeTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/profileImageView"
+            android:text="Hi , Welcome to Findora!"
+            android:textColor="@android:color/black"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <!-- Event Filters (Spinners) -->
+        <LinearLayout
+            android:id="@+id/spinnerLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/welcomeTextView"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal">
+
+
+<!--            <Spinner-->
+<!--                android:id="@+id/finderSpinner"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:backgroundTint="#AFA4A4"-->
+<!--                android:backgroundTintMode="add"-->
+<!--                android:entries="@array/finderSpinner"-->
+<!--                android:minHeight="38dp" />-->
+
+            <Spinner
+                android:id="@+id/eventSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="#756565"
+                android:backgroundTintMode="add"
+                android:entries="@array/eventSpinner"
+                android:minHeight="48dp" />
+
+            <Spinner
+                android:id="@+id/daytimeSpinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:backgroundTint="#756565"
+                android:backgroundTintMode="add"
+                android:entries="@array/daytimeSpinner"
+                android:minHeight="48dp" />
+        </LinearLayout>
+
+        <!-- RecyclerView for displaying events -->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/eventRecyclerView"
+            android:layout_width="368dp"
+            android:layout_height="393dp"
+            android:layout_below="@id/spinnerLayout"
+            android:layout_marginTop="54dp"
+            android:backgroundTint="#F6F2F2"
+            android:scrollbars="vertical"
+            tools:listitem="@layout/item_event" />
+
+        <!-- Buttons below the RecyclerView -->
+        <LinearLayout
+            android:id="@+id/bottomButtonsLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/eventRecyclerView"
+            android:layout_marginTop="16dp"
+            android:orientation="horizontal"
+            android:weightSum="2">
+
+            <!-- Button 1 -->
+            <Button
+                android:id="@+id/buttonPrevious"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:backgroundTint="#396DEF"
+                android:text="Previous" />
+
+            <!-- Button 2 -->
+            <Button
+                android:id="@+id/btnHostnext"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:backgroundTint="#396DEF"
+                android:text="Host Event"
+                android:textColor="@color/white" />
+        </LinearLayout>
+
+    </RelativeLayout>
+</ScrollView>

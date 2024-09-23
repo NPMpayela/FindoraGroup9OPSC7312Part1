@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+
+    <solid android:color="@android:color/transparent" />
+
+    <!-- This defines the color and width of the border -->
+    <stroke
+        android:width="2dp"
+        android:color="#00FFCC" /> <!-- Replace with desired border color -->
+
+    <size
+        android:width="100dp"
+        android:height="100dp" /> <!-- Adjust size if needed -->
+
+</shape>
