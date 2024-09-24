@@ -103,7 +103,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp"
         android:fontFamily="sans-serif"
-        android:text="Event Type :"
+        android:text="Category :"
         android:textColor="#373434"
         android:textSize="14sp"
         android:textStyle="bold"
@@ -140,19 +140,28 @@
         app:layout_constraintBaseline_toBaselineOf="@+id/ettDate"
         app:layout_constraintStart_toStartOf="parent" />
 
+
+    <!--    <Button-->
+<!--        android:id="@+id/btnPickDate"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="Pick Date"-->
+<!--        tools:layout_editor_absoluteX="209dp"-->
+<!--        tools:layout_editor_absoluteY="377dp" />-->
+
     <EditText
         android:id="@+id/ettDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="11dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="12dp"
         android:hint="dd/mm/yyyy"
         android:inputType="date"
         android:minHeight="48dp"
         android:textColor="#373434"
         android:textColorHint="#5A5959"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
+        app:layout_constraintStart_toEndOf="@+id/textView4"
         app:layout_constraintTop_toBottomOf="@+id/spinner" />
 
     <TextView
@@ -266,6 +275,17 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/istockphoto" />
 
+    <ImageButton
+        android:id="@+id/datepickbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginBottom="72dp"
+        android:backgroundTint="#BABBC3"
+        app:layout_constraintBottom_toTopOf="@+id/imageView3"
+        app:layout_constraintStart_toEndOf="@+id/ettDate"
+        app:srcCompat="@drawable/baseline_calendar_month_24"
+        tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

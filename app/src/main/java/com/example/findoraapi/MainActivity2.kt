@@ -1,8 +1,9 @@
 package com.example.findoraapi
 
-import Event
 //import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 //import android.graphics.Bitmap
 import android.net.Uri
 import android.os.Bundle
@@ -17,8 +18,11 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import kotlinx.coroutines.CoroutineStart
+import java.io.ByteArrayOutputStream
 import java.time.LocalDate
 import java.time.LocalTime
+import kotlin.io.encoding.Base64
 
 class MainActivity2 : AppCompatActivity() {
 
@@ -28,7 +32,7 @@ class MainActivity2 : AppCompatActivity() {
         const val REQUEST_IMAGE_CAPTURE = 1
     }
     private val PICK_IMAGE_REQUEST = 1
-
+    private val eventList = arrayListOf<Event>()
 
     private lateinit var imageView: ImageView
     private lateinit var startTimeTP: EditText//TimePicker
@@ -69,12 +73,31 @@ class MainActivity2 : AppCompatActivity() {
             startActivity(intent)
         }
 
-        findViewById<Button>(R.id.btnUploadevent).setOnClickListener{
-//event.startTime = startTimeTP.
+       findViewById<Button>(R.id.btnUploadevent).setOnClickListener {
 
-        }
+           // Get start and end time from the EditText fields**
+//           event.startTime = startTimeTP.text.toString() // Assuming startTimeTP is an EditText
+//           event.endTime = endTimeTP.text.toString() // Assuming endTimeTP is an EditText
+//
+//           // Get the selected event type from the Spinner**
+//           event.eventType = eventType.selectedItem.toString()
 
-    }
+           // Get the Bitmap from the ImageView (assuming the image was previously set)**
+//           val drawable = imageView.drawable
+//           if (drawable != null) {
+//               // Convert the drawable to Bitmap and store it in the event object
+//               val bitmap = (drawable as BitmapDrawable).bitmap
+//               event.imageBitmap = bitmap
+//           }
+
+           // Create intent to move to HomePage with eventList
+           val intent = Intent(this, HomePage::class.java)
+           intent.putParcelableArrayListExtra("event_list", eventList)
+           startActivity(intent)
+       }
+
+
+   }
     private fun openImagePicker() {
         val intent = Intent().apply {
             action = Intent.ACTION_GET_CONTENT
@@ -91,4 +114,11 @@ class MainActivity2 : AppCompatActivity() {
             imageView.setImageURI(imageUri)
         }
     }
+
+//    fun convertImageToBase64(bitmap: Bitmap): String {
+//        val byteArrayOutputStream = ByteArrayOutputStream()
+//        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream)
+//        val byteArray = byteArrayOutputStream.toByteArray()
+//        return Base64.encodeToString(byteArray, CoroutineStart.DEFAULT)
+//    }
 }

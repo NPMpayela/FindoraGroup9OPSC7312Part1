@@ -1,6 +1,5 @@
 package com.example.findoraapi
 
-import Event
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
@@ -27,14 +26,20 @@ class HomePage : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.home_page)
 
-//        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-//            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-//            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-//            insets
-     //   }
 
-        // Your main activity logic goes here
-      //  val spinner = findViewById<Spinner>(R.id.finderSpinner)
+        // Retrieve the event data
+//        val event = intent.getParcelableExtra<Event>("EVENT_DATA")
+//
+//        // Create a list with the event if you only have one event
+//        var eventList = listOf(event)
+//
+//        // Find RecyclerView and set it up
+//        val recyclerView: RecyclerView = findViewById(R.id.eventRecyclerView)
+//        recyclerView.layoutManager = LinearLayoutManager(this)
+//        recyclerView.adapter = FindoraEventAdapter(eventList)
+
+       //  Your main activity logic goes here
+//        val spinner = findViewById<Spinner>(R.id.finderSpinner)
 //        val adapter = ArrayAdapter.createFromResource(
 //            this,
 //            R.array.finderSpinner,
@@ -43,7 +48,10 @@ class HomePage : AppCompatActivity() {
 //        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
 //        spinner.adapter = adapter
 
-        //eventList = intent.getParcelableArrayListExtra("event_list") ?: ArrayList()
+     //   eventList = intent.getParcelableArrayListExtra("event_list") ?: ArrayList()
+
+
+
 
         val spinner2 = findViewById<Spinner>(R.id.eventSpinner)
         val adapter2 = ArrayAdapter.createFromResource(
