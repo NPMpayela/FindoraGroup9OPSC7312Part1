@@ -1,15 +1,14 @@
 package com.example.findoraapi
 
+import EventService
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
-import android.telecom.Call.Details
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.Spinner
@@ -18,15 +17,20 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.findoraapi.R.id.datepickbtn
+import com.google.android.datatransport.Event
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
 import com.google.android.libraries.places.widget.model.AutocompleteActivityMode
+import retrofit2.Call
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.text.SimpleDateFormat
 import java.util.Arrays
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -39,6 +43,19 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pickDateButton: ImageButton
     //private lateinit var autocompleteFragment: AutocompleteSupportFragment
     // Autocomplete handling
+
+    object RetrofitClient {
+        private const val BASE_URL = "https://10.0.2.2:44308/api/"
+
+        val instance: EventService by lazy {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build()
+
+            retrofit.create(EventService::class.java)
+        }
+    }
 
 
     private val startAutocomplete =
@@ -62,7 +79,8 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-   // @SuppressLint("MissingInflatedId")
+
+    // @SuppressLint("MissingInflatedId")
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,38 +123,57 @@ class MainActivity : AppCompatActivity() {
             startAutocomplete.launch(intent)
         }
 
-        // Navigation buttons
-       findViewById<Button>(R.id.btnNext).setOnClickListener {
+        findViewById<Button>(R.id.btnNext).setOnClickListener {
 
-           // Get the input date as a string
-           val dateText = date.text.toString()
+            // Get the input date as a string
+            val dateText = date.text.toString()
 
-           // Parse the date string into a Date object
-           val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault()) // Adjust the format as needed
-           val parsedDate: Date? = dateFormat.parse(dateText)
+            // Parse the date string into a Date object
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val parsedDate: Date? = dateFormat.parse(dateText)
 
-           // Convert Date to String in ISO format before sending to the API
-           val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
-           val isoDateString = isoDateFormat.format(parsedDate)
+            // Convert Date to String in ISO format before sending to the API
+            val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            val isoDateString = isoDateFormat.format(parsedDate)
 
-           // Create Event object with the ISO formatted date string
-           val event = Event(
-               title = title.text.toString(),
-               organisers = organisers.text.toString(),
-               location = location.text.toString(),
-               date = isoDateString // Use the ISO formatted date string
-           )
+            // Create Event object with the ISO formatted date string
+            val event = com.example.findoraapi.Event(
+                title = title.text.toString(),
+                organisers = organisers.text.toString(),
+                category=categorySpinner.selectedItem.toString(),
+                location = location.text.toString(),
+                date = isoDateString,
+                details=details.text.toString()
+            )
 
-           // Start the second activity and pass the event object
-           val intent = Intent(this, MainActivity2::class.java).apply {
-               putExtra("EVENT_DATA", event)
-           }
+            // Send the event object to the API using Retrofit
+            val api = RetrofitClient.instance
+            val call = api.createEvent(event)
 
-           startActivity(intent)  // This was commented out, uncomment this to make the button work
-       }
+            call.enqueue(object : retrofit2.Callback<Void> {
+                override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
+                    if (response.isSuccessful) {
+                        Toast.makeText(this@MainActivity, "Event created successfully", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(this@MainActivity, "Failed to create event", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<Void>, t: Throwable) {
+                    Toast.makeText(this@MainActivity, "Error: ${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
+
+            // Start the second activity and pass the event object
+//            val intent = Intent(this, MainActivity2::class.java).apply {
+//                putExtra("EVENT_DATA", event)
+//            }
+
+            startActivity(intent)
+        }
 
 
-       findViewById<Button>(R.id.btnBack).setOnClickListener {
+        findViewById<Button>(R.id.btnBack).setOnClickListener {
             val intent = Intent(this, HomePage::class.java)
             startActivity(intent)
         }

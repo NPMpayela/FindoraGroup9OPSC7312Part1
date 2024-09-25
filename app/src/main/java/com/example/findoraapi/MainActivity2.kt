@@ -58,7 +58,7 @@ class MainActivity2 : AppCompatActivity() {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner.adapter = adapter
 
-        event = intent.getParcelableExtra("EVENT_DATA") ?: Event()
+     //   event = intent.getParcelableExtra("EVENT_DATA") ?: Event()
 
         startTimeTP = findViewById(R.id.etstarttime)
         endTimeTP = findViewById(R.id.etendtime)
@@ -92,7 +92,7 @@ class MainActivity2 : AppCompatActivity() {
 
            // Create intent to move to HomePage with eventList
            val intent = Intent(this, HomePage::class.java)
-           intent.putParcelableArrayListExtra("event_list", eventList)
+           //intent.putParcelableArrayListExtra("event_list", eventList)
            startActivity(intent)
        }
 
