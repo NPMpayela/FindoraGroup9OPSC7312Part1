@@ -1,6 +1,5 @@
 package com.example.findoraapi
 
-import EventService
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.DatePickerDialog
@@ -17,7 +16,6 @@ import androidx.activity.result.ActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.example.findoraapi.R.id.datepickbtn
-import com.google.android.datatransport.Event
 import com.google.android.libraries.places.api.Places
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.Autocomplete
@@ -30,7 +28,39 @@ import java.util.Arrays
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+import javax.net.ssl.SSLContext
+import javax.net.ssl.TrustManager
+import javax.net.ssl.X509TrustManager
+import okhttp3.OkHttpClient
 
+
+
+fun getUnsafeOkHttpClient(): OkHttpClient {
+    return try {
+        // Create a trust manager that does not validate certificate chains
+        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
+            override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}
+
+            override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}
+
+            override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> = arrayOf()
+        })
+
+        // Install the all-trusting trust manager
+        val sslContext = SSLContext.getInstance("SSL")
+        sslContext.init(null, trustAllCerts, java.security.SecureRandom())
+        val sslSocketFactory = sslContext.socketFactory
+
+        // Use the OkHttpClient from okhttp3, not the older version
+        val builder = OkHttpClient.Builder()
+        builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
+        builder.hostnameVerifier { _, _ -> true }  // You can change this to `hostname, session -> true` if needed
+
+        builder.build()
+    } catch (e: Exception) {
+        throw RuntimeException(e)
+    }
+}
 
 class MainActivity : AppCompatActivity() {
 
@@ -41,21 +71,25 @@ class MainActivity : AppCompatActivity() {
     private lateinit var date: EditText
     private lateinit var location: EditText
     private lateinit var pickDateButton: ImageButton
+
+    private lateinit var eventapiservice: EventService
     //private lateinit var autocompleteFragment: AutocompleteSupportFragment
     // Autocomplete handling
 
-    object RetrofitClient {
-        private const val BASE_URL = "https://10.0.2.2:44308/api/"
+//    object RetrofitClient {
+//        private const val BASE_URL = "https://10.0.2.2:44308/api/"
+//
+//        val instance: EventService by lazy {
+//            val retrofit = Retrofit.Builder()
+//                .baseUrl(BASE_URL)
+//                .client(getUnsafeOkHttpClient())
+//                .addConverterFactory(GsonConverterFactory.create())
+//                .build()
+//
+//            retrofit.create(EventService::class.java)
+//        }
+//    }
 
-        val instance: EventService by lazy {
-            val retrofit = Retrofit.Builder()
-                .baseUrl(BASE_URL)
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
-
-            retrofit.create(EventService::class.java)
-        }
-    }
 
 
     private val startAutocomplete =
@@ -99,6 +133,16 @@ class MainActivity : AppCompatActivity() {
        pickDateButton.setOnClickListener {
            showDatePickerDialog(date)
        }
+
+        val retrofit = Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:44308/")
+          //  .client(getUnsafeOkHttpClient())// Add your backend URL here
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+        eventapiservice = retrofit.create(EventService::class.java)
+
+
 //Places Location auto-complete
        val apiKey = BuildConfig.MAPS_API_KEY
         Places.initialize(applicationContext, apiKey)
@@ -115,7 +159,8 @@ class MainActivity : AppCompatActivity() {
 
         // Location EditText
         location = findViewById(R.id.etLocation)
-        location.setOnClickListener {
+       // locimgbtn=findViewById(R.id.imageView3)
+        location.setOnClickListener{
             // Launch Autocomplete for location selection
             val fields = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG)
             val intent = Autocomplete.IntentBuilder(AutocompleteActivityMode.FULLSCREEN, fields)
@@ -126,36 +171,45 @@ class MainActivity : AppCompatActivity() {
         findViewById<Button>(R.id.btnNext).setOnClickListener {
 
             // Get the input date as a string
-            val dateText = date.text.toString()
-
-            // Parse the date string into a Date object
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+           val dateText = date.text.toString()
+//
+//            // Parse the date string into a Date object
+           val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             val parsedDate: Date? = dateFormat.parse(dateText)
-
+//
             // Convert Date to String in ISO format before sending to the API
-            val isoDateFormat = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.getDefault())
+            val isoDateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
             val isoDateString = isoDateFormat.format(parsedDate)
 
             // Create Event object with the ISO formatted date string
             val event = com.example.findoraapi.Event(
-                title = title.text.toString(),
+                eventName =title.text.toString(),
                 organisers = organisers.text.toString(),
-                category=categorySpinner.selectedItem.toString(),
+                category= categorySpinner.selectedItem.toString(),
                 location = location.text.toString(),
                 date = isoDateString,
                 details=details.text.toString()
             )
 
             // Send the event object to the API using Retrofit
-            val api = RetrofitClient.instance
-            val call = api.createEvent(event)
+//            eventapiservice = RetrofitClient.instance
+//            val call = eventapiservice.createEvent(event)
 
-            call.enqueue(object : retrofit2.Callback<Void> {
+            //call.enqueue(object
+            eventapiservice.createEvent(event).enqueue(object: retrofit2.Callback<Void> {
                 override fun onResponse(call: Call<Void>, response: retrofit2.Response<Void>) {
                     if (response.isSuccessful) {
                         Toast.makeText(this@MainActivity, "Event created successfully", Toast.LENGTH_SHORT).show()
+
+                        // Use this@MainActivity to refer to the activity context
+                        val intent = Intent(this@MainActivity, MainActivity2::class.java)
+                        startActivity(intent)
                     } else {
-                        Toast.makeText(this@MainActivity, "Failed to create event", Toast.LENGTH_SHORT).show()
+                        val errorBody = response.errorBody()?.string()
+                        Log.e("API Error", "Response code: ${response.code()} - Message: ${response.errorBody()?.string()}")
+                        Toast.makeText(this@MainActivity, "Failed to create event. Error: ${response.code()}", Toast.LENGTH_SHORT).show()
+                        Log.d("Event Data", event.toString())
+
                     }
                 }
 

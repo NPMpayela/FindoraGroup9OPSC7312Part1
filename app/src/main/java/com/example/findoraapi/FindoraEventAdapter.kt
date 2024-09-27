@@ -25,7 +25,7 @@ class FindoraEventAdapter(private val events: List<Event?>) :
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position]
         if (event != null) {
-            holder.eventTitleTextView.text = event.title
+            holder.eventTitleTextView.text = event.eventName
         }
         if (event != null) {
             holder.eventDescriptionTextView.text = event.details

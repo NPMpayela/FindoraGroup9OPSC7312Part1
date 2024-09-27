@@ -7,13 +7,14 @@ import android.os.Parcelable
 import java.io.ByteArrayOutputStream
 
 data class Event(
-
-    val title: String,
+    val eventName: String,
     val organisers: String,
     val location: String,
     val category: String,
     val date: String, // Ensure this is in the correct format (ISO 8601)
-    val details: String)
+    val details: String
+)
+
 
 //    var title: String = "",
 //    var organisers: String = "",
