@@ -10,13 +10,16 @@ import retrofit2.http.Path
 
 interface EventService {
 
-    @GET("api/events")
-    fun getEvents(): Call<List<Event>>
+//    @GET("Events")
+//    fun getEvents(): Call<List<Event>>
+
+    @GET("Events")
+    fun getEvents(): Call<EventResponse>
 
     @GET("api/events/{id}")
     fun getEventById(@Path("id") eventId: Int): Call<Event>
 
-    @POST("api/Event")
+    @POST("CreateEvent")
     @Headers("Content-Type: application/json")
     fun createEvent(@Body event: Event): Call<Void>
 

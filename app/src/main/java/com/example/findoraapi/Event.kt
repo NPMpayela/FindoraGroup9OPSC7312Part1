@@ -6,7 +6,9 @@ import android.os.Parcel
 import android.os.Parcelable
 import java.io.ByteArrayOutputStream
 
+
 data class Event(
+    val _id: String?,
     val eventName: String,
     val organisers: String,
     val location: String,

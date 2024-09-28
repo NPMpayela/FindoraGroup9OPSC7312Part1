@@ -35,33 +35,6 @@ import okhttp3.OkHttpClient
 
 
 
-fun getUnsafeOkHttpClient(): OkHttpClient {
-    return try {
-        // Create a trust manager that does not validate certificate chains
-        val trustAllCerts = arrayOf<TrustManager>(object : X509TrustManager {
-            override fun checkClientTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}
-
-            override fun checkServerTrusted(chain: Array<java.security.cert.X509Certificate>, authType: String) {}
-
-            override fun getAcceptedIssuers(): Array<java.security.cert.X509Certificate> = arrayOf()
-        })
-
-        // Install the all-trusting trust manager
-        val sslContext = SSLContext.getInstance("SSL")
-        sslContext.init(null, trustAllCerts, java.security.SecureRandom())
-        val sslSocketFactory = sslContext.socketFactory
-
-        // Use the OkHttpClient from okhttp3, not the older version
-        val builder = OkHttpClient.Builder()
-        builder.sslSocketFactory(sslSocketFactory, trustAllCerts[0] as X509TrustManager)
-        builder.hostnameVerifier { _, _ -> true }  // You can change this to `hostname, session -> true` if needed
-
-        builder.build()
-    } catch (e: Exception) {
-        throw RuntimeException(e)
-    }
-}
-
 class MainActivity : AppCompatActivity() {
 
     private lateinit var title: EditText
@@ -73,24 +46,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var pickDateButton: ImageButton
 
     private lateinit var eventapiservice: EventService
-    //private lateinit var autocompleteFragment: AutocompleteSupportFragment
-    // Autocomplete handling
-
-//    object RetrofitClient {
-//        private const val BASE_URL = "https://10.0.2.2:44308/api/"
-//
-//        val instance: EventService by lazy {
-//            val retrofit = Retrofit.Builder()
-//                .baseUrl(BASE_URL)
-//                .client(getUnsafeOkHttpClient())
-//                .addConverterFactory(GsonConverterFactory.create())
-//                .build()
-//
-//            retrofit.create(EventService::class.java)
-//        }
-//    }
-
-
 
     private val startAutocomplete =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result: ActivityResult ->
@@ -135,7 +90,7 @@ class MainActivity : AppCompatActivity() {
        }
 
         val retrofit = Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:44308/")
+            .baseUrl("http://10.0.2.2:4659")
           //  .client(getUnsafeOkHttpClient())// Add your backend URL here
             .addConverterFactory(GsonConverterFactory.create())
             .build()
@@ -144,8 +99,8 @@ class MainActivity : AppCompatActivity() {
 
 
 //Places Location auto-complete
-       val apiKey = BuildConfig.MAPS_API_KEY
-        Places.initialize(applicationContext, apiKey)
+      // val apiKey = BuildConfig.MAPS_API_KEY
+        //Places.initialize(applicationContext, apiKey)
 
         // Set up spinner
         val spinner = findViewById<Spinner>(R.id.spinner)
@@ -183,11 +138,12 @@ class MainActivity : AppCompatActivity() {
 
             // Create Event object with the ISO formatted date string
             val event = com.example.findoraapi.Event(
+                _id = null,
                 eventName =title.text.toString(),
                 organisers = organisers.text.toString(),
                 category= categorySpinner.selectedItem.toString(),
                 location = location.text.toString(),
-                date = isoDateString,
+                date = date.text.toString(),
                 details=details.text.toString()
             )
 

@@ -7,6 +7,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 
+
+
 class FindoraEventAdapter(private val events: List<Event?>) :
     RecyclerView.Adapter<FindoraEventAdapter.EventViewHolder>() {
 
@@ -24,12 +26,19 @@ class FindoraEventAdapter(private val events: List<Event?>) :
 
     override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
         val event = events[position]
-        if (event != null) {
-            holder.eventTitleTextView.text = event.eventName
-        }
-        if (event != null) {
-            holder.eventDescriptionTextView.text = event.details
-        }
+        holder.eventImageView.setImageResource(R.drawable.baseline_add_photo_alternate_24_2)
+        holder.eventTitleTextView.text = event?.eventName ?: "Unknown Event"
+        holder.eventDescriptionTextView.text = event?.details ?: "No details available"
+    }
+
+//    override fun onBindViewHolder(holder: EventViewHolder, position: Int) {
+//        val event = events[position]
+//        if (event != null) {
+//            holder.eventTitleTextView.text = event.eventName
+//        }
+//        if (event != null) {
+//            holder.eventDescriptionTextView.text = event.details
+//        }
 
 //        // Set image if available, otherwise use a placeholder **
 //        val bitmap: Bitmap? = event.imageBitmap
@@ -37,8 +46,8 @@ class FindoraEventAdapter(private val events: List<Event?>) :
 //            holder.eventImageView.setImageBitmap(bitmap)
 //        } else {
 //            holder.eventImageView.setImageResource(R.drawable.baseline_add_photo_alternate_24_2)
-//        }
-    }
+
+
 
     override fun getItemCount(): Int {
         return events.size
