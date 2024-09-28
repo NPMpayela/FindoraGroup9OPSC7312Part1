@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.ArrayAdapter
 import android.widget.Button
+import android.widget.ImageButton
 import android.widget.Spinner
  import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -68,36 +69,38 @@ class HomePage : AppCompatActivity() {
         val spinner2 = findViewById<Spinner>(R.id.eventSpinner)
         val adapter2 = ArrayAdapter.createFromResource(
             this,
-            R.array.eventCategories,
+            R.array.eventfilter,
             R.layout.simple_spinner_item // Custom item layout
         )
         adapter2.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
         spinner2.adapter = adapter2
 
-        val spinner3 = findViewById<Spinner>(R.id.daytimeSpinner)
-        val adapter3 = ArrayAdapter.createFromResource(
-            this,
-            R.array.daytimeSpinner,
-            R.layout.simple_spinner_item // Custom item layout
-        )
-        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spinner3.adapter = adapter3
-
+//        val spinner3 = findViewById<Spinner>(R.id.daytimeSpinner)
+//        val adapter3 = ArrayAdapter.createFromResource(
+//            this,
+//            R.array.daytimeSpinner,
+//            R.layout.simple_spinner_item // Custom item layout
+//        )
+//        adapter3.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+//        spinner3.adapter = adapter3
+//
 
         findViewById<Button>(R.id.btnHostnext).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+        findViewById<ImageButton>(R.id.mapsbtn).setOnClickListener(){
+            val intent = Intent(this, GoogleMapPage::class.java)
+            startActivity(intent)
+        }
 
-        // Get the event list from the intent
-        //eventList = intent.getParcelableArrayListExtra("event_list") ?: ArrayList()
 
         // Set up the RecyclerView
         eventRecyclerView = findViewById(R.id.eventRecyclerView)
         eventRecyclerView.layoutManager = LinearLayoutManager(this)
 
-       // eventAdapter = FindoraEventAdapter(eventList)
-        //eventRecyclerView.adapter = eventAdapter
+
+
     }
 
     private fun fetchEvents() {

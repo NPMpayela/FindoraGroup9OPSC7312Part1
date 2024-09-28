@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">FindoraAPI</string>
     <string name="next"> Next >> </string>
+    <string name="Viewmap">View Map.</string>
 
     <string-array name="eventCategories">
         <item>All</item>
@@ -8,10 +9,13 @@
         <item>Comedy</item>
         <item>Food</item>
         <item>Sports</item>
-<!-- <item>Entertainment</item>-->
+        <item>Entertainment</item>
         <item>Education</item>
     </string-array>
 
+    <string-array name="eventfilter">
+        <item>All</item>
+    </string-array>
 
     <string-array name="finderSpinner">
         <item>Finder</item>

@@ -99,8 +99,8 @@ class MainActivity : AppCompatActivity() {
 
 
 //Places Location auto-complete
-      // val apiKey = BuildConfig.MAPS_API_KEY
-        //Places.initialize(applicationContext, apiKey)
+       val apiKey = BuildConfig.MAPS_API_KEY
+        Places.initialize(applicationContext, apiKey)
 
         // Set up spinner
         val spinner = findViewById<Spinner>(R.id.spinner)
